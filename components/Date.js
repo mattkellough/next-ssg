@@ -1,9 +1,8 @@
-import React from "react";
-
-const Date = ({ date }) => {
+const Date = ({ date, loadTime }) => {
   return (
     <div>
       <p>Time Rendered: {date}</p>
+      <p>Load Time: {loadTime}ms</p>
     </div>
   );
 };
