@@ -2,25 +2,23 @@ import Link from "next/link";
 import { client } from "../lib/contentful";
 import moment from "moment";
 
-const Home = ({ date, allPosts }) => {
-  return (
+const Home = ({ date, allPosts }) => (
+  <div>
+    <Date date={date} />
     <div>
-      <Date date={date} />
-      <div>
-        {allPosts.map(({ slug, title }) => {
-          return (
-            <div key={slug}>
-              <h2>{title}</h2>
-              <Link href="/post/[slug]" as={`/post/${slug}`}>
-                <a>Go here</a>
-              </Link>
-            </div>
-          );
-        })}
-      </div>
+      {allPosts.map(({ slug, title }) => {
+        return (
+          <div key={slug}>
+            <h2>{title}</h2>
+            <Link href="/post/[slug]" as={`/post/${slug}`}>
+              <a>Go here</a>
+            </Link>
+          </div>
+        );
+      })}
     </div>
-  );
-};
+  </div>
+);
 
 export const getStaticProps = async () => {
   const entries = await client.getEntries({
