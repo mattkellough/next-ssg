@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { client } from "../lib/contentful";
+import moment from "moment";
 
-const Home = ({ allPosts }) => {
+const Home = ({ date, allPosts }) => {
   return (
     <div>
-      <Date />
+      <Date date={date} />
       <div>
         {allPosts.map(({ slug, title }) => {
           return (
@@ -25,8 +26,9 @@ export const getStaticProps = async () => {
   const entries = await client.getEntries({
     content_type: "blogPost",
   });
+  const date = moment().utcOffset("-0400").format("MMMM Do YYYY, h:mm:ss a");
 
-  return { props: { allPosts: entries.items.map((e) => e.fields) } };
+  return { props: { allPosts: entries.items.map((e) => e.fields), date } };
 };
 
 export default Home;
