@@ -57,7 +57,7 @@ export const getStaticProps = async (ctx) => {
 
   await waitForServer(250);
 
-  return { props: { entry, date } };
+  return { props: { entry, date }, unstable_revalidate: 60 };
 };
 
 export default BlogPost;

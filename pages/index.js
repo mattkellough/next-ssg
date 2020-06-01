@@ -42,7 +42,10 @@ export const getStaticProps = async () => {
   const date = moment().utcOffset("-0400").format("MMMM Do YYYY, h:mm:ss a");
   await waitForServer(250);
 
-  return { props: { allPosts: entries.items.map((e) => e.fields), date } };
+  return {
+    props: { allPosts: entries.items.map((e) => e.fields), date },
+    unstable_revalidate: 60,
+  };
 };
 
 export default Home;
