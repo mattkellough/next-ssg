@@ -4,16 +4,19 @@ import { client } from "../lib/contentful";
 const Home = ({ allPosts }) => {
   return (
     <div>
-      {allPosts.map(({ slug, title }) => {
-        return (
-          <div key={slug}>
-            <h2>{title}</h2>
-            <Link href="/post/[slug]" as={`/post/${slug}`}>
-              <a>Go here</a>
-            </Link>
-          </div>
-        );
-      })}
+      <Date />
+      <div>
+        {allPosts.map(({ slug, title }) => {
+          return (
+            <div key={slug}>
+              <h2>{title}</h2>
+              <Link href="/post/[slug]" as={`/post/${slug}`}>
+                <a>Go here</a>
+              </Link>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
