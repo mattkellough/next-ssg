@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { client } from "../lib/contentful";
 import moment from "moment";
 import Date from "../components/Date";
 import { waitForServer } from "../helpers";
 
-const Home = ({ date, allPosts }) => {
+const Home = ({ date }) => {
   const [loadTime, setLoadTime] = useState(0);
+  const paths = ["matt", "eric", "riley"];
 
   useEffect(() => {
     const loadingTime =
@@ -20,10 +20,10 @@ const Home = ({ date, allPosts }) => {
     <div>
       <Date date={date} loadTime={loadTime} />
       <div>
-        {allPosts.map(({ slug, title }) => {
+        {paths.map((slug) => {
           return (
             <div key={slug}>
-              <h2>{title}</h2>
+              <h2>{slug}</h2>
               <Link href="/post/[slug]" as={`/post/${slug}`}>
                 <a>Go here</a>
               </Link>
@@ -36,15 +36,14 @@ const Home = ({ date, allPosts }) => {
 };
 
 export const getStaticProps = async () => {
-  const entries = await client.getEntries({
-    content_type: "blogPost",
-  });
+  // const entries = await client.getEntries({
+  //   content_type: "blogPost",
+  // });
   const date = moment().utcOffset("-0400").format("MMMM Do YYYY, h:mm:ss a");
   await waitForServer(250);
 
   return {
-    props: { allPosts: entries.items.map((e) => e.fields), date },
-    unstable_revalidate: 60,
+    props: { date },
   };
 };
 
